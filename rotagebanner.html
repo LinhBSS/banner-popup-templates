@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 20px;
+            transform-style: preserve-3d;
+            transition: 0.8s;
+            /* transform: rotateX(45deg); */
+        }
+
+        .banner {
+            /* quy định là height = 40, thì mỗi phần tử chỉ cần translateZ 50% = 20px là được */
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            left: 0;
+            right: 0;
+            background-color: rgb(139, 93, 23);
+            position: absolute;
+            text-align: center;
+            font-size: 20px;
+            line-height: 1;
+            color: white;
+            font-weight: bold;
+            transform-style: preserve-3d;
+            /* nếu top để là 0 thì sẽ bị hiệu ứng chạy lên và chạy xuống */
+            top: 50%;
+            transform: translateY(-50%) rotateX(calc(var(--i) * 90deg)) translateZ(20px);
+            border: 0.1px solid white;
+        }
+
+        .list-show {
+            margin-top: 90px;
+            margin-left: 40px;
+            margin-bottom: -4px;
+            min-width: 200px;
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 4px;
+        }
+
+        .item-show {
+            padding: 4px 2px;
+            margin-bottom: 4px;
+        }
+
+        .bg-red {
+            background-color: rgb(243, 62, 62);
+        }
+
+        .button-container {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="--i: 0; background-color:rgb(139, 93, 23)" class="banner banner1"> </div>
+        <div style="--i: 1; background-color:rgb(129, 23, 139)" class="banner banner2"> </div>
+        <div style="--i: 2; background-color:rgb(23, 135, 139)" class="banner banner3"> </div>
+        <div style="--i: 3; background-color:rgb(107, 46, 74)" class="banner banner4"> </div>
+    </div>
+
+    <div class="list-show">
+        <div class="button-container">
+            <button class="button-js">Rotage Up</button>
+        </div>
+        <p class="item-show">Baner 1</p>
+        <p class="item-show">Baner 2</p>
+        <p class="item-show">Baner 3</p>
+        <p class="item-show">Baner 4</p>
+        <p class="item-show">Baner 5</p>
+    </div>
+
+    <script>
+        let rotateUp = true;
+
+        let animation2Rotate = 0;
+        let itemIndex = 0;
+        const listShow = document.querySelectorAll('.item-show');
+        const listBanner = document.querySelectorAll('.banner');
+        const button = document.querySelector('.button-js');
+
+        button.addEventListener('click', () => {
+            if (rotateUp){
+                button.innerText = "Rotage Down";
+                rotateUp = false;
+            } else {
+                button.innerText = "Rotage Up";
+                rotateUp = true;
+            }
+        })
+
+        // init   
+        listBanner[0].innerText = listShow[0].innerText;
+        listShow[0].classList.add('bg-red');
+
+        let intervalID = setInterval(() => {
+            let animation2 = document.querySelector('.container');
+
+
+            listShow.forEach(element => element.classList.remove('bg-red'))
+
+            // lấy ra phần tử trong danh sách hiện tại đang được trỏ đến
+            itemIndex = (itemIndex + 1) % listShow.length;
+            listShow[itemIndex].classList.add('bg-red');
+            const textToShow = listShow[itemIndex].innerText;
+
+            // lấy ra phần tử banner đang được hiển thị
+            const bannerIndex = Math.abs((animation2Rotate / 90) % 4);
+            if (rotateUp) {
+                listBanner[4 - bannerIndex - 1].innerText = textToShow;
+                animation2Rotate += 90;
+            } else {
+                listBanner[(bannerIndex + 1) % 4].innerText = textToShow;
+                animation2Rotate -= 90;
+            }
+            animation2.style.transform = `perspective(1000px) rotateX(${animation2Rotate}deg)`;
+
+        }, 3000);
+    </script>
+</body>
+
+</html>

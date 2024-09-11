@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .popup-container{
+            position: fixed;
+            display: flex;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px;
+            box-shadow: 0 0 2px 1px gray, 0 2px 4px 1px rgb(189, 189, 189);
+            min-width: 320px;
+            border-radius: 8px;
+        }
+        
+        .popup-container-show-up{
+            animation: showup 0.4s linear forwards;
+        }
+
+        .popup-container-show-down{
+            animation: showdown 0.4s ease-out forwards;
+        }
+
+        @keyframes showup {
+            from{
+                transform: translateY(200px);
+            } 
+            to{
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes showdown {
+            from{
+                transform: translateY(0);
+            } 
+            to{
+                transform: translateY(200px);
+            }
+        }
+
+        .popup-image{
+            height: 100px;
+            width: 100px;
+            border-radius: 8px;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 0 0 2px 1px gray;
+        }
+
+        .popup-content{
+            margin-left: 12px;
+        }
+        
+        .new-word{
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .type{
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="popup-container">
+        <div style="background-image: url('https://m.media-amazon.com/images/I/61kqk1j03LL._AC_UF894,1000_QL80_.jpg');" class="popup-image"></div>
+        <div class="popup-content">
+            <p class="new-word">Shelve</p>
+            <p class="type">(n)</p>
+        </div>
+    </div>
+    
+    <script>
+        const container = document.querySelector('.popup-container');
+        
+        function isPopupDisplay(){
+            // return container.style.display != 'none';
+            return container.classList.contains('popup-container-show-up');
+        }
+        function showPopup(){
+            // container.style.display = 'flex'
+            container.classList.remove('popup-container-show-down');
+            container.classList.add('popup-container-show-up');
+        }
+        function hidenPopup(){
+            // container.style.display = 'none'
+            container.classList.remove('popup-container-show-up');
+            container.classList.add('popup-container-show-down');
+        }
+        function changeNewWord(imageUrl, newWord, type){
+            const image = document.querySelector('.popup-image');
+            const title = document.querySelector('.new-word');
+            const typeNewWord = document.querySelector('.type');
+            image.style.backgroundImage = `url(${imageUrl})`;
+            title.innerText = newWord;
+            typeNewWord.innerText = type;
+        }
+        setInterval(() => {
+            if (isPopupDisplay()){
+                hidenPopup();
+            } else {
+                changeNewWord("https://preview.redd.it/lqlbdefe8ov81.png?width=860&format=png&auto=webp&s=09c2d1c7151a065c20491b5d00289f040f5d45e4", "stack", "(n), (v)")
+                showPopup();
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
