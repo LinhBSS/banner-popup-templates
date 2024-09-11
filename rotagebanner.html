@@ -81,13 +81,16 @@
 
     <div class="list-show">
         <div class="button-container">
-            <button class="button-js">Rotage Up</button>
+            <label for="button-control">Điều khiển lên xuống:</label>
+            <button id="button-control" class="button-js">Rotate Up</button>
         </div>
-        <p class="item-show">Baner 1</p>
-        <p class="item-show">Baner 2</p>
-        <p class="item-show">Baner 3</p>
-        <p class="item-show">Baner 4</p>
-        <p class="item-show">Baner 5</p>
+        <p class="item-show">Giảm giá tháng 1</p>
+        <p class="item-show">Giảm giá tháng 2</p>
+        <p class="item-show">Giảm giá tháng 3</p>
+        <p class="item-show">Giảm giá tháng 4</p>
+        <p class="item-show">Giảm giá tháng 5</p>
+        <p class="item-show">Giảm giá tháng 6</p>
+        <p class="item-show">Giảm giá tháng 7</p>
     </div>
 
     <script>
@@ -100,11 +103,11 @@
         const button = document.querySelector('.button-js');
 
         button.addEventListener('click', () => {
-            if (rotateUp){
-                button.innerText = "Rotage Down";
+            if (rotateUp) {
+                button.innerText = "Rotate Down";
                 rotateUp = false;
             } else {
-                button.innerText = "Rotage Up";
+                button.innerText = "Rotate Up";
                 rotateUp = true;
             }
         })
@@ -119,17 +122,25 @@
 
             listShow.forEach(element => element.classList.remove('bg-red'))
 
-            // lấy ra phần tử trong danh sách hiện tại đang được trỏ đến
-            itemIndex = (itemIndex + 1) % listShow.length;
-            listShow[itemIndex].classList.add('bg-red');
-            const textToShow = listShow[itemIndex].innerText;
 
             // lấy ra phần tử banner đang được hiển thị
             const bannerIndex = Math.abs((animation2Rotate / 90) % 4);
             if (rotateUp) {
+                // lấy ra phần tử trong danh sách hiện tại đang được trỏ đến
+                itemIndex = (itemIndex + 1) % listShow.length;
+                listShow[itemIndex].classList.add('bg-red');
+                const textToShow = listShow[itemIndex].innerText;
+
                 listBanner[4 - bannerIndex - 1].innerText = textToShow;
                 animation2Rotate += 90;
             } else {
+                itemIndex = itemIndex - 1;
+                if (itemIndex == -1){
+                    itemIndex = listShow.length - 1;
+                }
+                listShow[itemIndex].classList.add('bg-red');
+                const textToShow = listShow[itemIndex].innerText;
+
                 listBanner[(bannerIndex + 1) % 4].innerText = textToShow;
                 animation2Rotate -= 90;
             }

@@ -4,113 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .brown {
-            background-color: rgb(173, 53, 53);
-        }
-
-        .blue {
-            background-color: rgb(53, 105, 173);
-        }
-
-        .banner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 0px 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .over_flow-hidden {
-            overflow: hidden;
-        }
-
-        .content {
-            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            line-height: 1;
-        }
-
-        .animation-1 {
-            animation: text-to-show 6s infinite;
-        }
-
-        .animation-2 {
-            position: relative;
-            height: 80px;
-            width: 100%;
-            transform-style: preserve-3d;
-            /* transition: 0.8s; */
-        }
-
-        .animation-2-item {
-            left: 50%;
-            position: absolute;
-            transform: translateX(-50%) rotateX(calc(var(--i) * 120deg)) translateZ(12px);
-            transform-style: preserve-3d;
-            background-color: rgba(53, 105, 173, 0.8);
-        }
-
-        @keyframes text-to-show {
-            0% {
-                transform: translateX(1200px);
-                letter-spacing: 20px;
-            }
-
-            25% {
-                transform: translateX(0);
-                letter-spacing: 0;
-            }
-
-            75% {
-                transform: translateX(0);
-                letter-spacing: 0;
-            }
-
-            100% {
-                transform: translateX(-1200px);
-                letter-spacing: 20px;
-            }
-        }
-    </style>
+    <title>Banner</title>
 </head>
 
 <body>
-
-    <div class="banner brown" style="top: 0;">
-        <p class="content animation-1">Xin chào các bạn</p>
-    </div>
-
-    <div class="banner blue over_flow-hidden" style="top: 120px;">
-        <div class="animation-2 animation-2-js">
-            <p style="--i: 1;" class="content animation-2-item">Banner 1</p>
-            <p style="--i: 2;" class="content animation-2-item">Banner 2</p>
-            <p style="--i: 3;" class="content animation-2-item">Banner 3</p>
-        </div>
-    </div>
-
-    <script>
-        let animation2Rotate = 0;
-        let intervalID = setInterval(() => {
-            let animation2 = document.querySelector('.animation-2-js');
-            animation2Rotate += 120;
-            animation2.style.transition = '0.8s';
-
-            if (animation2Rotate == 360) {
-                clearInterval(intervalID);
-                // animation2.style.transition = '0s';
-                // animation2Rotate = 0;
-            } 
-
-            animation2.style.transform = `perspective(1000px) rotateX(${animation2Rotate}deg)`;
-
-        }, 2000);
-    </script>
+    <h1>Danh sách các kiểu banner</h1>
+    <ul>
+        <li>
+            <a href="./rotagebanner.html">Type 1</a>
+        </li>
+        <li>
+            <a href="./slideBanner.html">Type 2</a>
+        </li>
+    </ul>
 </body>
 
 </html>
