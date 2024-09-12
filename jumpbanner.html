@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumper Banner</title>
+    <style>
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0px 0;
+            display: flex;
+            justify-content: center;
+            background-color: brown;
+            padding: 12px 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+        }
+
+        .content-item {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            display: inline-block;
+            animation: animate 1.2s linear infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+            margin: 0 1px;
+        }
+
+        @keyframes animate {
+            0% {
+                transform: translateY(0);
+            }
+
+            25% {
+                transform: translateY(-6px);
+            }
+
+            50% {
+                transform: translateY(0);
+            }
+
+            75% {
+                transform: translateY(6px);
+            }
+        }
+
+        .control {
+            margin: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="banner">
+        <div class="container">
+            <span class="content">
+                <!-- <span style="--i:1" class="content-item">H</span>
+                <span style="--i:2" class="content-item">e</span>
+                <span style="--i:3" class="content-item">l</span>
+                <span style="--i:4" class="content-item">l</span>
+                <span style="--i:5" class="content-item">o</span> -->
+            </span>
+        </div>
+    </div>
+
+    <div class="control">
+        <label for="input">Nhập vào đây, sau đó blur để cập nhật</label>
+        <input id="input" type="text" class="input" placeholder="Nhập thông tin">
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+        const content = document.querySelector('.content');
+        let textToShow = "Hello, Chào các bạn nha";
+
+        function showText(){
+            const arrToShow = textToShow.split("").map((value, index) => {
+                const span = `<span style="--i:${index}" class="content-item">${value}</span>`;
+                return span;
+            })
+    
+            content.innerHTML = arrToShow.join("");
+        }
+
+        const input = document.querySelector(".input");
+        input.addEventListener('blur', ()=>{
+            showText()
+        })
+
+        input.addEventListener("input", (e)=>{
+            textToShow = e.target.value;
+        })
+        input.value = textToShow;
+        showText();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill Text Banner</title>
+    <style>
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0px 0;
+            display: flex;
+            justify-content: center;
+            background-color: #262626;
+            background-image: linear-gradient(to right, #333 1px, transparent 1px), linear-gradient(to bottom, #333 1px, transparent 1px);
+            background-size: 12px 12px;
+            padding: 12px 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            font-size: 20px;
+            color: transparent;
+            -webkit-text-stroke: 0.1px #01fe87;
+            position: relative;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .content::before {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            content: attr(data-text);
+            position: absolute;
+            width: 0px;
+            top: -2px;
+            left: -2px;
+
+            color: #01fe87;
+            overflow: hidden;
+            white-space: nowrap;
+            border: 2px solid #01fe87;
+            box-sizing: border-box;
+            border-radius: 3px;
+            animation: animate 6s infinite;
+        }
+
+        @keyframes animate {
+            0% {
+                width: 0px;
+            }
+
+            50% {
+                width: 160px;
+            }
+        }
+
+
+
+        .color-white {
+            color: white;
+            -webkit-text-stroke: 0.1px white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="banner">
+        <div class="container">
+            <span class="color-white">Mã <span class="content" data-text="giảm giá tháng 5">giảm giá tháng
+                    5</span></span>
+        </div>
+    </div>
+</body>
+
+</html>
