@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumper Banner</title>
+    <style>
+        .banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 0px 0;
+            display: flex;
+            justify-content: center;
+            background-color: brown;
+            padding: 12px 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        .content-item {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            display: inline-block;
+            margin: 0 4px;
+        }
+
+        .up-slide {
+            animation: up-slide 6s linear infinite;
+        }
+
+        .down-slide {
+            animation: down-slide 6s linear infinite;
+        }
+
+        @keyframes up-slide {
+            0% {
+                transform: translateY(50px);
+            }
+
+            5% {
+                transform: translateY(-1px);
+            }
+
+            10% {
+                transform: translateY(1px);
+            }
+
+            15% {
+                transform: translateY(0);
+            }
+
+            80% {
+                transform: translateY(0);
+            }
+
+            83% {
+                transform: translateY(-2px);
+            }
+
+            85% {
+                transform: translateY(50px);
+            }
+
+            100% {
+                transform: translateY(50px);
+            }
+        }
+
+        @keyframes down-slide {
+            0% {
+                transform: translateY(-50px);
+            }
+
+            5% {
+                transform: translateY(1px);
+            }
+
+            10% {
+                transform: translateY(-1px);
+            }
+
+            15% {
+                transform: translateY(0);
+            }
+
+            80% {
+                transform: translateY(0);
+            }
+
+            83% {
+                transform: translateY(2px);
+            }
+
+            85% {
+                transform: translateY(-50px);
+            }
+
+
+            100% {
+                transform: translateY(-50px);
+            }
+        }
+
+        .control {
+            margin: 80px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="banner">
+        <div class="container">
+            <span class="content"></span>
+        </div>
+    </div>
+
+    <div class="control">
+        <label for="input">Nhập vào đây, sau đó blur để cập nhật</label>
+        <input id="input" type="text" class="input" placeholder="Nhập thông tin">
+    </div>
+
+    <script>
+        const container = document.querySelector('.container');
+        const content = document.querySelector('.content');
+        let textToShow = "Hello, Chào các bạn nha";
+
+        function showText() {
+            const arrToShow = textToShow.split(" ").map((value, index) => {
+                const span = `<span class="content-item ${index % 2 == 0 ? "up-slide" : "down-slide"}">${value}</span>`;
+                return span;
+            })
+
+            content.innerHTML = arrToShow.join("");
+        }
+
+        const input = document.querySelector(".input");
+        input.addEventListener('blur', () => {
+            showText()
+        })
+
+        input.addEventListener("input", (e) => {
+            textToShow = e.target.value;
+        })
+        input.value = textToShow;
+        showText();
+    </script>
+</body>
+
+</html>
