@@ -25,13 +25,7 @@
             align-items: center;
         }
 
-        .container-animation {
-            animation: container-animate 0.4s 4s forwards;
-        }
-
         .content {
-            /* Cái này cho phép cắt dòng khi có khoảng trắng hoặc không */
-            white-space: nowrap;
             font-size: 20px;
             color: rgb(255, 255, 255);
             font-weight: bold;
@@ -41,69 +35,85 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             display: inline-block;
             margin: 0 1px;
-            scale: 4;
-            opacity: 0;
         }
 
-        @keyframes container-animate {
+        .show {
+            animation: animate-show calc(6s - var(--i) * 0.1s) linear forwards;
+        }
+
+        .hidden {
+            animation: animate-hidden calc(6s - var(--i) * 0.1s) linear forwards;
+        }
+
+        @keyframes animate-show {
             0% {
-                width: 100%;
-            }
-
-            0%,
-            99% {
-                opacity: 1;
-            }
-
-            10%,
-            100% {
-                border-left: 2px solid rgb(255, 255, 255);
-                border-right: 2px solid rgb(255, 255, 255);
+                transform: translateX(100px);
+                opacity: 0;
+                letter-spacing: -100px;
             }
 
             10% {
-                width: 100%;
-            }
-
-            99% {
-                width: 0;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        @keyframes animate {
-            0% {
-                scale: 4;
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.5;
-                scale: 0.8;
+                opacity: 0.8;
+                transform: translateX(-8px) rotate(calc(360deg * 1));
             }
 
             12% {
-                opacity: 1;
-                scale: 1;
+                transform: translateX(0) rotate(calc(360deg * 2));
             }
 
             14% {
-                opacity: 0.5;
-                scale: 1.2;
+                transform: translateX(8px) rotate(calc(360deg * 3));
             }
 
-            16%,
-            94% {
-                opacity: 1;
-                scale: 1;
+            16% {
+                transform: translateX(0) rotate(0);
+                letter-spacing: normal;
             }
 
             100% {
+                transform: translateX(0) rotate(0);
+                letter-spacing: normal;
+            }
+
+            12%,
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes animate-hidden {
+            100% {
+                transform: translateX(100px);
                 opacity: 0;
-                scale: 4;
+                letter-spacing: -100px;
+            }
+
+            90% {
+                opacity: 0.8;
+                transform: translateX(-8px) rotate(calc(360deg * 1));
+            }
+
+            88% {
+                transform: translateX(0) rotate(calc(360deg * 2));
+            }
+
+            86% {
+                transform: translateX(8px) rotate(calc(360deg * 3));
+            }
+
+            84% {
+                transform: translateX(0) rotate(0);
+                letter-spacing: normal;
+            }
+
+            0% {
+                transform: translateX(0) rotate(0);
+                letter-spacing: normal;
+            }
+
+            12%,
+            0% {
+                opacity: 1;
             }
         }
 
@@ -130,13 +140,10 @@
         const container = document.querySelector('.container');
         const content = document.querySelector('.content');
         let textToShow = "Hello, Chào các bạn nha";
-        let intervalID = null;
-        
 
         function showText() {
-            // Khởi tạo ra đoạn text ban đầu
-            const arrToShow = textToShow.split("").map((value) => {
-                const span = `<span class="content-item">${value}</span>`;
+            const arrToShow = textToShow.split("").map((value, index) => {
+                const span = `<span style="--i:${index}" class="content-item">${value}</span>`;
                 return span;
             })
             content.innerHTML = arrToShow.join("");
@@ -145,15 +152,16 @@
             const showAnimation = () => {
                 const listItem = document.querySelectorAll(".content-item");
                 listItem.forEach((element) => {
-                    const randomTime = Math.round(Math.random() * 20 + 1)
-                    element.style.animation = `animate ${4 - randomTime * 0.1}s  ${randomTime * 0.1}s linear forwards`
+                    element.classList.remove("hidden");
+                    element.classList.add("show");
                 })
             }
 
             const cancelAnimation = () => {
                 const listItem = document.querySelectorAll(".content-item");
                 listItem.forEach((element) => {
-                    element.style.animation = "none";
+                    element.classList.remove("show");
+                    element.classList.add("hidden");
                 })
             }
 
@@ -168,13 +176,12 @@
                     showAnimation();
                     animationState = true;
                 }
-            }, 4000);
+            }, 8000);
         }
 
         const input = document.querySelector(".input");
         input.addEventListener('blur', () => {
-            showText();
-            clearInterval(intervalID)
+            showText()
         })
 
         input.addEventListener("input", (e) => {
